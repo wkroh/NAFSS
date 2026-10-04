@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة نواتج التعلم لاختبارات نافس الوطنية | الصف التاسع (الثالث متوسط)</title>
+  <meta name="description" content="منصة تعليمية وتدريبية متكاملة لنواتج التعلم التخصصية في العلوم الطبيعية للصف التاسع وفق الإطار المرجعي لهيئة تقويم التعليم والتدريب (ETEC).">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            tajawal: ['Tajawal', 'sans-serif'],
+            cairo: ['Cairo', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Canvas Confetti for Celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen flex flex-col font-tajawal antialiased selection:bg-teal-500 selection:text-white transition-colors duration-300">
+
+  <!-- ========================================================================= -->
+  <!-- رأس الصفحة (Header & Navigation) -->
+  <!-- ========================================================================= -->
+  <header class="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- الشعار والهوية -->
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-700 text-white flex items-center justify-center text-2xl shadow-lg shadow-teal-500/20">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl sm:text-2xl font-black font-cairo bg-gradient-to-r from-teal-700 to-emerald-600 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
+                نافس | الصف التاسع
+              </span>
+              <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 border border-teal-300 dark:border-teal-800">
+                ETEC 2023
+              </span>
+            </div>
+            <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">
+              العلوم الطبيعية • نواتج التعلم للاختبارات الوطنية
+            </p>
+          </div>
+        </div>
+
+        <!-- روابط التنقل الرئيسية للشاشات الكبيرة -->
+        <nav class="hidden lg:flex items-center gap-1 bg-gray-100/80 dark:bg-gray-800/80 p-1.5 rounded-2xl border border-gray-200/60 dark:border-gray-700/60">
+          <button class="nav-btn px-4 py-2 rounded-xl text-sm font-bold transition flex items-center gap-2 bg-teal-700 text-white" data-tab="overview">
+            <i class="fa-solid fa-house text-xs"></i>
+            <span>الرئيسية</span>
+          </button>
+          <button class="nav-btn px-4 py-2 rounded-xl text-sm font-bold transition flex items-center gap-2 text-teal-900 dark:text-teal-100 hover:bg-gray-200 dark:hover:bg-gray-700" data-tab="lessons">
+            <i class="fa-solid fa-book-bookmark text-xs"></i>
+            <span>المسارات والدروس</span>
+          </button>
+          <button class="nav-btn px-4 py-2 rounded-xl text-sm font-bold transition flex items-center gap-2 text-teal-900 dark:text-teal-100 hover:bg-gray-200 dark:hover:bg-gray-700" data-tab="exam">
+            <i class="fa-solid fa-stopwatch-20 text-xs text-amber-500"></i>
+            <span>محاكي نافس (30 سؤال)</span>
+          </button>
+          <button class="nav-btn px-4 py-2 rounded-xl text-sm font-bold transition flex items-center gap-2 text-teal-900 dark:text-teal-100 hover:bg-gray-200 dark:hover:bg-gray-700" data-tab="flashcards">
+            <i class="fa-solid fa-layer-group text-xs"></i>
+            <span>بطاقات المراجعة</span>
+          </button>
+          <button class="nav-btn px-4 py-2 rounded-xl text-sm font-bold transition flex items-center gap-2 text-teal-900 dark:text-teal-100 hover:bg-gray-200 dark:hover:bg-gray-700" data-tab="training">
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs text-emerald-500"></i>
+            <span>مركز التدريب (nafss.pro)</span>
+          </button>
+        </nav>
+
+        <!-- الإجراءات (البحث، السمة، التدريب السريع) -->
+        <div class="flex items-center gap-2.5">
+          <!-- تبديل الوضع الداكن -->
+          <button id="theme-toggle-btn" class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 flex items-center justify-center transition border border-gray-200 dark:border-gray-700" title="تبديل الوضع الليلي / النهاري">
+            <i class="fa-solid fa-moon dark:hidden"></i>
+            <i class="fa-solid fa-sun hidden dark:block text-amber-400"></i>
+          </button>
+
+          <!-- زر منصة التدريب نافس المباشر -->
+          <a href="https://nafss.pro" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-all hover:scale-105">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <span>للتدريب - nafss.pro</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- شريط البحث السريع والتقدم -->
+      <div class="py-2.5 border-t border-gray-100 dark:border-gray-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="relative flex-1 max-w-md">
+          <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+          <input type="text" id="global-search-input" placeholder="ابحث في المفاهيم، القوانين، ونواتج التعلم..." class="w-full pr-10 pl-4 py-1.5 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-800 dark:text-gray-200">
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <span class="text-gray-500 dark:text-gray-400 font-semibold">نسبة إنجازك:</span>
+            <div class="w-32 bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
+              <div id="overall-progress-bar" class="bg-teal-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <span id="overall-progress-text" class="font-bold text-teal-700 dark:text-teal-300">0%</span>
+          </div>
+
+          <span id="best-mock-score-badge" class="hidden px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 font-bold"></span>
+        </div>
+      </div>
+
+      <!-- شريط التنقل للأجهزة الذكية (Mobile Nav) -->
+      <div class="lg:hidden flex items-center justify-around py-2 border-t border-gray-100 dark:border-gray-800 overflow-x-auto gap-2">
+        <button class="nav-btn px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap bg-teal-700 text-white" data-tab="overview">الرئيسية</button>
+        <button class="nav-btn px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap text-gray-600 dark:text-gray-300" data-tab="lessons">الدروس</button>
+        <button class="nav-btn px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap text-gray-600 dark:text-gray-300" data-tab="exam">المحاكي</button>
+        <button class="nav-btn px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap text-gray-600 dark:text-gray-300" data-tab="flashcards">البطاقات</button>
+        <button class="nav-btn px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap text-emerald-600 dark:text-emerald-400 font-extrabold" data-tab="training">nafss.pro</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- المحتوى الرئيسي (Main Content Tabs) -->
+  <!-- ========================================================================= -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- --------------------------------------------------------------------- -->
+    <!-- التبويب 1: الرئيسية والمعايير (Overview) -->
+    <!-- --------------------------------------------------------------------- -->
+    <section id="tab-overview" class="tab-content space-y-12">
+      <!-- البانر الترحيبي (Hero Section) -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-teal-800 via-teal-900 to-slate-900 text-white p-8 sm:p-12 shadow-2xl border border-teal-700/40">
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-3xl space-y-6">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-700/60 border border-teal-400/30 text-xs font-bold text-teal-200">
+            <i class="fa-solid fa-award text-amber-400"></i>
+            <span>المرجع الوطني المعتمد للاختبارات الوطنية 2023 - 2026</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl font-black font-cairo leading-tight">
+            استعد بامتياز لاختبارات نافس الوطنية في <span class="text-teal-300 underline decoration-teal-400/50">العلوم الطبيعية</span> للصف التاسع
+          </h1>
+
+          <p class="text-base sm:text-lg text-teal-100/90 leading-relaxed">
+            منصة دراسية تفاعلية مخصصة لطلاب الصف التاسع (الثالث متوسط)، صُممت استناداً إلى وثيقة معايير ونواتج التعلم الصادرة عن هيئة تقويم التعليم والتدريب (ETEC). تغطي كافة مجالات علوم الحياة، العلوم الفيزيائية، وعلوم الأرض والفضاء مع شرح مفصل وبنك أسئلة ومحاكاة حقيقية.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <button class="nav-btn px-6 py-3.5 rounded-2xl bg-teal-500 hover:bg-teal-400 text-teal-950 font-black text-sm transition shadow-lg shadow-teal-500/30 flex items-center gap-2" data-tab="lessons">
+              <i class="fa-solid fa-book-open"></i>
+              <span>ابدأ دراسة المسارات</span>
+            </button>
+
+            <button class="nav-btn px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm transition backdrop-blur-sm flex items-center gap-2" data-tab="exam">
+              <i class="fa-solid fa-stopwatch-20 text-amber-400"></i>
+              <span>خوض المحاكي الوطني (30 سؤال)</span>
+            </button>
+
+            <a href="https://nafss.pro" target="_blank" rel="noopener noreferrer" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-bold text-sm transition shadow-lg shadow-emerald-500/30 flex items-center gap-2">
+              <i class="fa-solid fa-laptop-code"></i>
+              <span>تدرب على nafss.pro</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- أرقام وإحصائيات -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10 pt-8 border-t border-teal-700/50 text-center">
+          <div class="p-3 rounded-2xl bg-white/5 border border-white/10">
+            <div class="text-2xl sm:text-3xl font-black text-teal-300 font-cairo">3</div>
+            <div class="text-xs text-teal-200">مجالات علمية رئيسية</div>
+          </div>
+          <div class="p-3 rounded-2xl bg-white/5 border border-white/10">
+            <div class="text-2xl sm:text-3xl font-black text-teal-300 font-cairo">11</div>
+            <div class="text-xs text-teal-200">نواتج تعلم تخصصية</div>
+          </div>
+          <div class="p-3 rounded-2xl bg-white/5 border border-white/10">
+            <div class="text-2xl sm:text-3xl font-black text-teal-300 font-cairo">45+</div>
+            <div class="text-xs text-teal-200">مؤشرات أداء دقيقة</div>
+          </div>
+          <div class="p-3 rounded-2xl bg-white/5 border border-white/10">
+            <div class="text-2xl sm:text-3xl font-black text-teal-300 font-cairo">100%</div>
+            <div class="text-xs text-teal-200">مطابقة لمعايير ETEC</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- دليل المستويات الإدراكية للاختبار الوطني (Cognitive Levels) -->
+      <div>
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h2 class="text-2xl font-black font-cairo text-gray-900 dark:text-white">
+              المستويات الإدراكية المستهدفة في الاختبار الوطني
+            </h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              تُبنى أسئلة اختبار نافس وفق 3 مستويات معرفية وعقلية محددة بدقة في وثيقة الهيئة:
+            </p>
+          </div>
+        </div>
+        <div id="cognitive-levels-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- يتم إدراج البطاقات ديناميكياً بواسطة JavaScript -->
+        </div>
+      </div>
+
+      <!-- المسارات والمجالات الثلاثة -->
+      <div>
+        <div class="mb-6">
+          <h2 class="text-2xl font-black font-cairo text-gray-900 dark:text-white">
+            مجالات العلوم الطبيعية للصف التاسع
+          </h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            اختر أحد المجالات للانتقال مباشرة إلى دروسه ونواتج تعلمه ومؤشراته:
+          </p>
+        </div>
+        <div id="domains-summary-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- يتم إدراجها بواسطة JavaScript -->
+        </div>
+      </div>
+
+      <!-- لافتة التوجيه لتدريبات نافس -->
+      <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-emerald-900 to-teal-900 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-emerald-700/50">
+        <div class="flex items-center gap-5">
+          <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-3xl text-emerald-300 flex-shrink-0">
+            <i class="fa-solid fa-laptop-file"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold font-cairo">هل تريد خوض المزيد من التدريبات العملية المباشرة؟</h3>
+            <p class="text-sm text-emerald-100/80 mt-1 leading-relaxed">
+              قم بزيارة منصة نافس المخصصة للتدريب على أسئلة ونماذج الاختبارات الوطنية عبر الرابط الرسمي المباشر.
+            </p>
+          </div>
+        </div>
+        <a href="https://nafss.pro" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-white text-emerald-950 font-black text-sm hover:bg-emerald-50 transition shadow-lg flex-shrink-0 flex items-center gap-2">
+          <span>انتقل إلى nafss.pro</span>
+          <i class="fa-solid fa-arrow-left"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- --------------------------------------------------------------------- -->
+    <!-- التبويب 2: المسارات والدروس المفصلة (Lessons) -->
+    <!-- --------------------------------------------------------------------- -->
+    <section id="tab-lessons" class="tab-content hidden space-y-8">
+      
+      <!-- عرض قائمة الدروس والفلترة (List View) -->
+      <div id="lessons-list-view" class="space-y-6">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-black font-cairo text-gray-900 dark:text-white">
+              المسارات التعليمية ونواتج التعلم
+            </h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+              استكشف الشرح المفاهيمي المتعمق لكل درس متبوعاً بأسئلة تدريبية فورية وتفسير الإجابات.
+            </p>
+          </div>
+
+          <!-- أزرار فلترة المجالات -->
+          <div class="flex flex-wrap items-center gap-2 bg-gray-100 dark:bg-gray-800 p-1.5 rounded-2xl border border-gray-200 dark:border-gray-700">
+            <button class="domain-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-teal-600 text-white" data-filter="all">
+              الكل
+            </button>
+            <button class="domain-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" data-filter="life-sciences">
+              علوم الحياة
+            </button>
+            <button class="domain-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" data-filter="physical-sciences">
+              العلوم الفيزيائية
+            </button>
+            <button class="domain-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" data-filter="earth-space">
+              علوم الأرض والفضاء
+            </button>
+          </div>
+        </div>
+
+        <div id="lessons-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- يتم ملء بطاقات الدروس ديناميكياً -->
+        </div>
+      </div>
+
+      <!-- عرض تفاصيل الدرس الواحد والأسئلة (Detail View - يظهر عند النقر) -->
+      <div id="lesson-detail-view" class="hidden space-y-8">
+        <!-- شريط الرجوع والإجراءات -->
+        <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-4">
+          <button id="back-to-lessons-list-btn" class="flex items-center gap-2 text-teal-600 dark:text-teal-400 font-bold text-sm hover:underline">
+            <i class="fa-solid fa-arrow-right"></i>
+            <span>الرجوع إلى قائمة الدروس</span>
+          </button>
+
+          <div class="flex items-center gap-2">
+            <button id="print-lesson-btn" class="px-3.5 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 text-xs font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-1.5">
+              <i class="fa-solid fa-print"></i>
+              <span>طباعة الملخص</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ترويسة الدرس -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm space-y-4">
+          <div class="flex items-center gap-3">
+            <span id="lesson-view-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 border border-teal-300 dark:border-teal-800"></span>
+            <span id="lesson-view-code" class="text-xs font-semibold text-gray-500 dark:text-gray-400"></span>
+          </div>
+
+          <h1 id="lesson-view-title" class="text-2xl sm:text-3xl font-black font-cairo text-gray-900 dark:text-white leading-snug"></h1>
+
+          <!-- صندوق مؤشرات الأداء الرسمية -->
+          <div class="p-4 rounded-2xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200/60 dark:border-teal-800/60 space-y-2">
+            <p class="text-xs font-bold text-teal-900 dark:text-teal-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-list-check"></i>
+              <span>مؤشرات التحقق والتمكن المستهدفة في نهاية الصف التاسع:</span>
+            </p>
+            <ul id="lesson-view-indicators" class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 space-y-1.5 pr-2"></ul>
+          </div>
+        </div>
+
+        <!-- محتوى الشرح المفاهيمي -->
+        <div class="p-6 sm:p-10 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm">
+          <div class="border-b border-gray-100 dark:border-gray-700 pb-4 mb-6 flex items-center justify-between">
+            <h2 class="text-xl font-bold font-cairo text-gray-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-chalkboard-user text-teal-600"></i>
+              <span>الشرح المفاهيمي الشامل</span>
+            </h2>
+            <span class="text-xs text-gray-400">منظم وفق المفردات الرسمية</span>
+          </div>
+          
+          <div id="lesson-view-content" class="lesson-content text-gray-700 dark:text-gray-200 leading-relaxed text-base space-y-4"></div>
+        </div>
+
+        <!-- بطاقات المفاهيم الذهبية -->
+        <div class="p-6 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm">
+          <h3 class="text-lg font-bold font-cairo text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-lightbulb text-amber-500"></i>
+            <span>النقاط الذهبية والمفاهيم الجوهرية للاختبار</span>
+          </h3>
+          <div id="lesson-view-takeaways" class="grid grid-cols-1 sm:grid-cols-3 gap-3"></div>
+        </div>
+
+        <!-- اختبار التحقق التفاعلي للدرس -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-gray-50 to-teal-50/20 dark:from-gray-800 dark:to-gray-850 border border-gray-200 dark:border-gray-700 shadow-sm">
+          <div class="mb-6">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-black font-cairo text-gray-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-circle-question text-teal-600"></i>
+                <span>اختبر تمكنك في هذا الدرس</span>
+              </h3>
+              <span class="text-xs font-semibold text-teal-700 dark:text-teal-300">تصحيح فوري مع التعليل العلمي</span>
+            </div>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              أجب عن الأسئلة التالية لقياس مستوى إتقانك لنواتج التعلم الخاصة بالدرس:
+            </p>
+          </div>
+
+          <div id="lesson-quiz-container"></div>
+        </div>
+
+        <!-- أزرار التنقل بين الدروس (السابق / التالي) -->
+        <div class="flex items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-700">
+          <button id="lesson-prev-btn" class="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-xs font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition flex items-center gap-2">
+            <i class="fa-solid fa-arrow-right"></i>
+            <span>الدرس السابق</span>
+          </button>
+          
+          <button id="lesson-next-btn" class="px-5 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold transition shadow-md shadow-teal-600/20 flex items-center gap-2">
+            <span>الدرس التالي</span>
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- --------------------------------------------------------------------- -->
+    <!-- التبويب 3: محاكي نافس الوطني الشامل (Mock Exam Simulator) -->
+    <!-- --------------------------------------------------------------------- -->
+    <section id="tab-exam" class="tab-content hidden space-y-8">
+      
+      <!-- شاشة الاختبار النشطة (Live Testing View) -->
+      <div id="mock-live-testing-view" class="space-y-6">
+        
+        <!-- الشريط العلوي للمحاكي (المؤقت والتقدم) -->
+        <div class="p-6 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-black font-cairo text-gray-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-stopwatch-20 text-teal-600"></i>
+              <span>محاكي الاختبار الوطني الشامل (نافس) - الصف التاسع</span>
+            </h2>
+            <p id="mock-answered-stat" class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              0 من 30 سؤالاً مجابة
+            </p>
+          </div>
+
+          <!-- العداد الزمني التنازلي -->
+          <div class="flex items-center gap-3 bg-teal-50 dark:bg-teal-950/60 border border-teal-200 dark:border-teal-800/60 px-5 py-2.5 rounded-2xl">
+            <i class="fa-regular fa-clock text-teal-600 dark:text-teal-400 text-xl"></i>
+            <div>
+              <div class="text-[10px] text-gray-500 dark:text-gray-400 font-bold">الوقت المتبقي</div>
+              <div id="mock-timer-display" class="text-xl font-mono font-black text-teal-800 dark:text-teal-200">30:00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <!-- عمود السؤال الحالي (3/4 العرض) -->
+          <div class="lg:col-span-3">
+            <div id="mock-question-display-container"></div>
+          </div>
+
+          <!-- عمود لوحة أرقام الأسئلة الجانبية (1/4 العرض) -->
+          <div class="lg:col-span-1">
+            <div class="p-6 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm space-y-4">
+              <div class="flex items-center justify-between">
+                <h3 class="text-sm font-bold font-cairo text-gray-900 dark:text-white">
+                  خارطة الأسئلة (30 سؤال)
+                </h3>
+              </div>
+
+              <!-- دليل الألوان -->
+              <div class="text-[11px] space-y-1.5 text-gray-500 dark:text-gray-400">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded bg-teal-600"></span>
+                  <span>سؤال مجاب</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded border-2 border-amber-400"></span>
+                  <span>سؤال مميز للمراجعة</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded bg-gray-100 dark:bg-gray-700"></span>
+                  <span>سؤال غير مجاب</span>
+                </div>
+              </div>
+
+              <!-- شبكة الأرقام -->
+              <div id="mock-palette-container" class="grid grid-cols-5 gap-2 pt-2 border-t border-gray-100 dark:border-gray-700"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- شاشة النتائج والتحليل التخصصي (Results View - تظهر بعد التسليم) -->
+      <div id="mock-results-view" class="hidden space-y-8">
+        
+        <!-- بطاقة النتيجة الكلية -->
+        <div class="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-teal-800 to-slate-900 text-white shadow-2xl text-center space-y-6">
+          <span class="text-xs font-bold px-4 py-1 rounded-full bg-teal-700/60 border border-teal-400/30 text-teal-200">
+            تقرير الأداء التخصصي في الاختبار الوطني
+          </span>
+
+          <div class="space-y-2">
+            <div id="mock-result-percentage" class="text-6xl sm:text-7xl font-black font-cairo text-teal-300">
+              0%
+            </div>
+            <p id="mock-result-correct" class="text-base text-teal-100 font-semibold"></p>
+          </div>
+
+          <div>
+            <span id="mock-result-tier-badge"></span>
+          </div>
+
+          <div class="pt-4 flex flex-wrap justify-center gap-4">
+            <button id="restart-mock-btn" class="px-6 py-3 rounded-2xl bg-teal-500 hover:bg-teal-400 text-teal-950 font-black text-sm transition shadow-lg flex items-center gap-2">
+              <i class="fa-solid fa-rotate-right"></i>
+              <span>إعادة الاختبار بنموذج جديد</span>
+            </button>
+            <a href="https://nafss.pro" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm transition flex items-center gap-2">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <span>متابعة التدريب على منصة nafss.pro</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- تحليلات المجالات والمستويات الإدراكية -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-6 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm space-y-4">
+            <h3 class="text-base font-bold font-cairo text-gray-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-chart-pie text-teal-600"></i>
+              <span>تحليل الأداء حسب المجالات العلمية الثلاثة:</span>
+            </h3>
+            <div id="mock-domains-breakdown-container" class="space-y-3"></div>
+          </div>
+
+          <div class="p-6 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm space-y-4">
+            <h3 class="text-base font-bold font-cairo text-gray-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-brain text-indigo-600"></i>
+              <span>تحليل الأداء حسب المستويات الإدراكية (ETEC):</span>
+            </h3>
+            <div id="mock-cog-breakdown-container" class="space-y-3"></div>
+          </div>
+        </div>
+
+        <!-- مراجعة كافة الأسئلة وإجاباتها النموذجية -->
+        <div class="space-y-4">
+          <h3 class="text-xl font-black font-cairo text-gray-900 dark:text-white">
+            مراجعة تفصيلية لجميع الأسئلة مع التفسيرات العلمية:
+          </h3>
+          <div id="mock-questions-review-list" class="space-y-4"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --------------------------------------------------------------------- -->
+    <!-- التبويب 4: بطاقات المراجعة السريعة (Flashcards) -->
+    <!-- --------------------------------------------------------------------- -->
+    <section id="tab-flashcards" class="tab-content hidden space-y-8">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-black font-cairo text-gray-900 dark:text-white">
+            بطاقات المراجعة السريعة (Flashcards)
+          </h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            طريقة تفاعلية مثبتة علمياً لتثبيت القوانين والمفاهيم والمقارنات قبل الاختبار. اضغط على البطاقة لقلبها.
+          </p>
+        </div>
+
+        <!-- فلترة البطاقات -->
+        <div class="flex flex-wrap items-center gap-2 bg-gray-100 dark:bg-gray-800 p-1.5 rounded-2xl border border-gray-200 dark:border-gray-700">
+          <button class="fc-domain-filter-btn px-3 py-1 rounded-xl text-xs font-bold transition bg-teal-600 text-white" data-domain="all">الكل</button>
+          <button class="fc-domain-filter-btn px-3 py-1 rounded-xl text-xs font-bold transition bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" data-domain="life-sciences">علوم الحياة</button>
+          <button class="fc-domain-filter-btn px-3 py-1 rounded-xl text-xs font-bold transition bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" data-domain="physical-sciences">الفيزيائية</button>
+          <button class="fc-domain-filter-btn px-3 py-1 rounded-xl text-xs font-bold transition bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300" data-domain="earth-space">الأرض والفضاء</button>
+        </div>
+      </div>
+
+      <!-- حاوية البطاقة التفاعلية -->
+      <div class="max-w-xl mx-auto space-y-6">
+        <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 px-2">
+          <span id="flashcard-domain-badge" class="font-bold text-teal-600 dark:text-teal-400"></span>
+          <span id="flashcard-counter-text" class="font-semibold"></span>
+        </div>
+
+        <!-- البطاقة ثلاثية الأبعاد -->
+        <div id="main-flashcard" class="flip-card w-full h-80 cursor-pointer select-none">
+          <div class="flip-card-inner">
+            <!-- الوجه الأمامي (السؤال / المصطلح) -->
+            <div class="flip-card-front bg-white dark:bg-gray-800 border-2 border-teal-500/40 dark:border-teal-500/30">
+              <span class="text-xs font-bold px-3 py-1 rounded-full bg-teal-50 dark:bg-teal-950 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 mb-6">
+                سؤال / مفهوم
+              </span>
+              <p id="flashcard-front-text" class="text-xl sm:text-2xl font-black font-cairo text-gray-900 dark:text-white text-center leading-relaxed"></p>
+              <span class="text-xs text-gray-400 dark:text-gray-500 mt-auto flex items-center gap-1.5">
+                <i class="fa-solid fa-repeat"></i> اضغط لمعرفة الإجابة
+              </span>
+            </div>
+
+            <!-- الوجه الخلفي (الإجابة والشرح) -->
+            <div class="flip-card-back bg-gradient-to-br from-teal-800 to-slate-900 text-white border-2 border-teal-400">
+              <span class="text-xs font-bold px-3 py-1 rounded-full bg-teal-700/60 border border-teal-400/30 text-teal-200 mb-4">
+                الإجابة والملخص
+              </span>
+              <p id="flashcard-back-text" class="text-base sm:text-lg font-medium text-teal-50 text-center leading-relaxed whitespace-pre-line"></p>
+              <span class="text-xs text-teal-300/80 mt-auto flex items-center gap-1.5">
+                <i class="fa-solid fa-rotate-left"></i> اضغط للعودة للسؤال
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- أدوات التحكم في البطاقات -->
+        <div class="flex items-center justify-center gap-3">
+          <button id="prev-flashcard-btn" class="w-12 h-12 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:text-teal-600 flex items-center justify-center transition shadow-sm hover:scale-105" title="البطاقة السابقة">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <button id="shuffle-flashcard-btn" class="px-5 py-3 rounded-2xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-teal-50 hover:text-teal-700 font-bold text-xs flex items-center gap-2 border border-gray-200 dark:border-gray-700 transition" title="خلط عشوائي">
+            <i class="fa-solid fa-shuffle"></i>
+            <span>خلط عشوائي</span>
+          </button>
+          <button id="next-flashcard-btn" class="w-12 h-12 rounded-2xl bg-teal-600 text-white hover:bg-teal-700 flex items-center justify-center transition shadow-md shadow-teal-600/20 hover:scale-105" title="البطاقة التالية">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- --------------------------------------------------------------------- -->
+    <!-- التبويب 5: مركز التدريب الخارجي - نافس (nafss.pro) -->
+    <!-- --------------------------------------------------------------------- -->
+    <section id="tab-training" class="tab-content hidden space-y-8">
+      <div class="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-emerald-800 via-teal-900 to-slate-900 text-white shadow-2xl space-y-6">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-700/60 border border-emerald-400/30 text-xs font-bold text-emerald-200">
+          <i class="fa-solid fa-link text-emerald-400"></i>
+          <span>منصة التدريب الوطنية المعتمدة</span>
+        </div>
+
+        <h2 class="text-3xl sm:text-4xl font-black font-cairo">
+          منصة نافس للتدريب والاختبارات الوطنية (<span class="text-emerald-300">nafss.pro</span>)
+        </h2>
+
+        <p class="text-base sm:text-lg text-emerald-100/90 leading-relaxed max-w-3xl">
+          تعتبر منصة <strong class="text-white">nafss.pro</strong> المرجع التدريبي الرائد للطلاب والمعلمين لخوض الاختبارات التجريبية والتدريبات التشخيصية التي تحاكي بيئة الاختبارات الوطنية الحقيقية في مجالات القراءة والرياضيات والعلوم الطبيعية.
+        </p>
+
+        <div class="pt-2 flex flex-wrap items-center gap-4">
+          <a href="https://nafss.pro" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-2xl bg-emerald-400 hover:bg-emerald-300 text-emerald-950 font-black text-base transition shadow-xl shadow-emerald-500/30 flex items-center gap-3 hover:scale-105">
+            <span>الدخول المباشر للتدريب: nafss.pro</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- مزايا التدريب على nafss.pro -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-laptop"></i>
+          </div>
+          <h4 class="text-lg font-bold font-cairo text-gray-900 dark:text-white">محاكاة رقمية واقعية</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            التعرف على نمط الأسئلة الحاسوبية، إدارة وقت الاختبار بدقة، والتعود على أسلوب صياغة الأسئلة المعتمد وزارياً.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
+          <div class="w-12 h-12 rounded-2xl bg-teal-100 dark:bg-teal-950 text-teal-600 dark:text-teal-400 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <h4 class="text-lg font-bold font-cairo text-gray-900 dark:text-white">تقارير تشخيصية فورية</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            الحصول على كشف نقاط تفصيلي يحدد نقاط القوة ونقاط الضعف في كل مجال وناتج تعلم لتكثيف المراجعة قبل الموعد.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm space-y-3">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-bullseye"></i>
+          </div>
+          <h4 class="text-lg font-bold font-cairo text-gray-900 dark:text-white">تغطية شاملة للصف التاسع</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            نماذج تدريبية متسلسلة تغطي المناهج الدراسية ونواتج التعلم المستهدفة لطلبة الصف التاسع (الثالث متوسط).
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- تذييل الصفحة (Footer) -->
+  <!-- ========================================================================= -->
+  <footer class="mt-auto border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center text-xl">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <div class="font-bold text-gray-900 dark:text-white text-base font-cairo">
+              منصة نواتج التعلم لاختبارات نافس الوطنية - الصف التاسع
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">
+              مبنية وفق وثيقة هيئة تقويم التعليم والتدريب (ETEC) بالمملكة العربية السعودية 2023
+            </div>
+          </div>
+        </div>
+
+        <!-- روابط التذييل -->
+        <div class="flex flex-wrap items-center gap-4 text-xs font-bold text-gray-600 dark:text-gray-300">
+          <a href="https://nafss.pro" target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 transition flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <span>منصة التدريب (nafss.pro)</span>
+          </a>
+          <span class="text-gray-300 dark:text-gray-700">•</span>
+          <a href="https://etec.gov.sa" target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 transition">
+            هيئة تقويم التعليم والتدريب (ETEC)
+          </a>
+        </div>
+      </div>
+
+      <div class="pt-6 border-t border-gray-100 dark:border-gray-800 text-center text-xs text-gray-400">
+        مشروع مفتوح المصدر ومستضاف مجاناً عبر GitHub Pages لخدمة المعلمين والطلاب في المملكة العربية السعودية.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ملفات البيانات والمنطق -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
